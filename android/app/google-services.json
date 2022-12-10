@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "432864502294",
+    "project_id": "wattsofficedb",
+    "storage_bucket": "wattsofficedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432864502294:android:6712f3681d982cdb1f4b37",
+        "android_client_info": {
+          "package_name": "com.example.wattsofficeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432864502294-fmssn31nojrbdjtfgooq7dc6b91evmd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhX4QB0J1LJdj_hceAt6uWUt_VSy09E10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432864502294-fmssn31nojrbdjtfgooq7dc6b91evmd6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
