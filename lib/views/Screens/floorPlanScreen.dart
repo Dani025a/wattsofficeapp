@@ -37,9 +37,6 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
   late DateTime choosendate = currentime;
   @override
   void initState() {
-    if (widget.currentime != null) {
-      currentime == widget.currentime;
-    }
     super.initState();
     streamData = SharedController.getDates();
   }
@@ -73,12 +70,12 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                       return buildText('Something Went Wrong Try later');
                     } else {
                       final datemodel = snapshot1.data;
-                      
+
                       if (datemodel!.isEmpty) {
                         return buildText('No Data Found');
                       } else {
-                        currentdateindex =
-                          Utils().getCurrentDate(datemodel, currentime, false);
+                        currentdateindex = Utils()
+                            .getCurrentDate(datemodel, currentime, false);
                         return Column(children: <Widget>[
                           Column(children: [
                             Padding(
@@ -99,14 +96,12 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                           MaterialButton(
                                             onPressed: () {
                                               setState(() {
-                                                setState(() {
-                                                  if (index !=
-                                                      datemodel.length - 1) {
-                                                    index = index + 1;
-                                                    choosendate =
-                                                        datemodel[index].date!;
-                                                  }
-                                                });
+                                                if (index !=
+                                                    datemodel.length - 1) {
+                                                  index = index + 1;
+                                                  choosendate =
+                                                      datemodel[index].date!;
+                                                }
                                               });
                                             },
                                             child: Icon(Icons.arrow_back_ios),
@@ -243,7 +238,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
               }),
           if (isSelected[0] == true)
             FloorPlanOne(
-                currentime: Utils.dateFormat.format(choosendate).toString())
+              currentime: Utils.dateFormat.format(choosendate).toString(),
+            )
           else if (isSelected[1] == true)
             FloorPlanTwo(
                 currentime: Utils.dateFormat.format(choosendate).toString())

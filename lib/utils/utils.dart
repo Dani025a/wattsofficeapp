@@ -41,6 +41,22 @@ class Utils {
     }
   }
 
+  getUserInfo(final List<SeatingAndFoodPlanModel> data, String uid) {
+    int? userIndex;
+    {
+      for (int i = 0; i < data.length; i++) {
+        if (uid == data[i].uid) {
+          userIndex = i;
+        }
+      }
+      if (userIndex == null) {
+        return null;
+      } else {
+        return userIndex;
+      }
+    }
+  }
+
   getCurrentDate(final List<DateModel> dateModel, var currentime,
       bool seatingAndFoodScreen) {
     int displayCurrentTime = 0;
