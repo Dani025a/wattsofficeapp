@@ -44,10 +44,33 @@ class _FloorPlanOneState extends State<FloorPlanOne> {
           final data = snapshot1.data;
           switch (snapshot1.connectionState) {
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return Expanded(
+                  child: ListView(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      children: [
+                    Stack(children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                width: width,
+                                child: Stack(children: [
+                                  Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, width * 0.02, 0, 10),
+                                      child: Image.asset(
+                                        'assets/Rooms.png',
+                                        fit: BoxFit.cover,
+                                        width: width,
+                                      )),
+                                ]))
+                          ])
+                    ])
+                  ]));
             default:
-              userIndex = Utils()
-                  .getUserInfo(data!, FirebaseAuth.instance.currentUser!.uid);
+              userIndex = Utils().getUserInfo(data!);
               return Expanded(
                   child: ListView(
                       padding: EdgeInsets.zero,
@@ -64,102 +87,31 @@ class _FloorPlanOneState extends State<FloorPlanOne> {
                               child: Stack(children: [
                                 Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 10),
+                                        0, width * 0.02, 0, 0),
                                     child: Image.asset(
                                       'assets/Rooms.png',
                                       fit: BoxFit.cover,
                                       width: width,
                                     )),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                                Padding(
+                                    padding: EdgeInsetsDirectional.only(
+                                        top: width * 0.02),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Stack(
+                                        Row(
                                           children: [
-                                            seatOne(
-                                                Utils()
-                                                    .getIndexForSeat(data, 1),
-                                                seatwidth,
-                                                data, () {
-                                              int? index = Utils()
-                                                  .getIndexForSeat(data, 1);
-
-                                              if (index == null &&
-                                                  data[userIndex!].seatNumber ==
-                                                      0) {
-                                                SharedController().addSeat(
-                                                  widget.currentime.toString(),
-                                                  1,
-                                                );
-                                              } else if (index == null) {
-                                                UpdateSeatPopUp(
-                                                    context,
-                                                    widget.currentime
-                                                        .toString(),
-                                                    1);
-                                              } else if (data[userIndex!]
-                                                      .seatNumber !=
-                                                  1) {
-                                                SeatInfoPopUp(
-                                                    context,
-                                                    data[index].firstName!,
-                                                    data[index].lastName!,
-                                                    data[index].initials!,
-                                                    1);
-                                              }
-                                            }),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Stack(
-                                          children: [
-                                            seatOne(
-                                                Utils()
-                                                    .getIndexForSeat(data, 2),
-                                                seatwidth,
-                                                data, () {
-                                              int? index = Utils()
-                                                  .getIndexForSeat(data, 2);
-                                              if (index == null &&
-                                                  data[userIndex!].seatNumber ==
-                                                      0) {
-                                                SharedController().addSeat(
-                                                  widget.currentime.toString(),
-                                                  2,
-                                                );
-                                              } else if (index == null) {
-                                                UpdateSeatPopUp(
-                                                    context,
-                                                    widget.currentime
-                                                        .toString(),
-                                                    2);
-                                              } else if (data[userIndex!]
-                                                      .seatNumber !=
-                                                  2) {
-                                                SeatInfoPopUp(
-                                                    context,
-                                                    data[index].firstName!,
-                                                    data[index].lastName!,
-                                                    data[index].initials!,
-                                                    2);
-                                              }
-                                            }),
-                                            Padding(
-                                                padding:
-                                                    EdgeInsetsDirectional.only(
-                                                        start: width * 0.2),
-                                                child: seatOne(
+                                            Stack(
+                                              children: [
+                                                seatOne(
                                                     Utils().getIndexForSeat(
-                                                        data, 3),
+                                                        data, 1),
                                                     seatwidth,
                                                     data, () {
                                                   int? index = Utils()
-                                                      .getIndexForSeat(data, 3);
+                                                      .getIndexForSeat(data, 1);
+
                                                   if (index == null &&
                                                       data[userIndex!]
                                                               .seatNumber ==
@@ -167,34 +119,121 @@ class _FloorPlanOneState extends State<FloorPlanOne> {
                                                     SharedController().addSeat(
                                                       widget.currentime
                                                           .toString(),
-                                                      3,
+                                                      1,
                                                     );
                                                   } else if (index == null) {
                                                     UpdateSeatPopUp(
                                                         context,
                                                         widget.currentime
                                                             .toString(),
-                                                        3);
+                                                        1);
                                                   } else if (data[userIndex!]
                                                           .seatNumber !=
-                                                      3) {
+                                                      1) {
                                                     SeatInfoPopUp(
                                                         context,
                                                         data[index].firstName!,
                                                         data[index].lastName!,
                                                         data[index].initials!,
-                                                        3);
+                                                        1);
                                                   }
-                                                }))
+                                                }),
+                                              ],
+                                            ),
                                           ],
                                         ),
+                                        Row(
+                                          children: [
+                                            Stack(
+                                              children: [
+                                                seatOne(
+                                                    Utils().getIndexForSeat(
+                                                        data, 2),
+                                                    seatwidth,
+                                                    data, () {
+                                                  int? index = Utils()
+                                                      .getIndexForSeat(data, 2);
+                                                  if (index == null &&
+                                                      data[userIndex!]
+                                                              .seatNumber ==
+                                                          0) {
+                                                    SharedController().addSeat(
+                                                      widget.currentime
+                                                          .toString(),
+                                                      2,
+                                                    );
+                                                  } else if (index == null) {
+                                                    UpdateSeatPopUp(
+                                                        context,
+                                                        widget.currentime
+                                                            .toString(),
+                                                        2);
+                                                  } else if (data[userIndex!]
+                                                          .seatNumber !=
+                                                      2) {
+                                                    SeatInfoPopUp(
+                                                        context,
+                                                        data[index].firstName!,
+                                                        data[index].lastName!,
+                                                        data[index].initials!,
+                                                        2);
+                                                  }
+                                                }),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .only(
+                                                                start: width *
+                                                                    0.2),
+                                                    child: seatOne(
+                                                        Utils().getIndexForSeat(
+                                                            data, 3),
+                                                        seatwidth,
+                                                        data, () {
+                                                      int? index = Utils()
+                                                          .getIndexForSeat(
+                                                              data, 3);
+                                                      if (index == null &&
+                                                          data[userIndex!]
+                                                                  .seatNumber ==
+                                                              0) {
+                                                        SharedController()
+                                                            .addSeat(
+                                                          widget.currentime
+                                                              .toString(),
+                                                          3,
+                                                        );
+                                                      } else if (index ==
+                                                          null) {
+                                                        UpdateSeatPopUp(
+                                                            context,
+                                                            widget.currentime
+                                                                .toString(),
+                                                            3);
+                                                      } else if (data[
+                                                                  userIndex!]
+                                                              .seatNumber !=
+                                                          3) {
+                                                        SeatInfoPopUp(
+                                                            context,
+                                                            data[index]
+                                                                .firstName!,
+                                                            data[index]
+                                                                .lastName!,
+                                                            data[index]
+                                                                .initials!,
+                                                            3);
+                                                      }
+                                                    }))
+                                              ],
+                                            ),
+                                          ],
+                                        )
                                       ],
-                                    )
-                                  ],
-                                ),
+                                    )),
                                 Padding(
                                   padding: EdgeInsetsDirectional.only(
-                                      top: width * 0.19),
+                                      top: width * 0.21),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,

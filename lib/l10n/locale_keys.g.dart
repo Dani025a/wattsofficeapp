@@ -65,6 +65,15 @@ abstract class  LocaleKeys {
   static const addSeat = 'addSeat';
   static const editSeat = 'editSeat';
   static const search = 'search';
-  static const Notifications = 'Notifications';
+  static const notifications = 'notifications';
+  static const noData = 'noData';
+  static const noUsers = 'noUsers';
+  static const somethingWentWrong = 'somethingWentWrong';
+  static const roomOne = 'roomOne';
+  static const roomTwo = 'roomTwo';
+  static const cancel = 'cancel';
+  static const add = 'add';
+  static const name = 'name';
+  static const seatNumber = 'seatNumber';
 
 }

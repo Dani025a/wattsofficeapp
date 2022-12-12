@@ -3,6 +3,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:wattsofficeapp/Controllers/sharedController.dart';
 import 'package:wattsofficeapp/utils/utils.dart' as dateUtils;
 import 'package:get/get.dart' hide Trans;
 import 'package:wattsofficeapp/Controllers/authController.dart';
@@ -21,15 +22,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     AuthController authController = Get.put(AuthController());
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: width * 0.1,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.settings.tr(),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: width * 0.06,
             ),
           ),
           actions: [],
@@ -60,6 +63,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               onPressed: () {
                                 AuthController.instance.signOut();
                               })),
+                      Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          child: MaterialButton(
+                              height: 40,
+                              minWidth: 110,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(8)),
+                              color: Colors.black,
+                              child: Text(
+                                LocaleKeys.signUp.tr(),
+                                style: TextStyle(
+                                    fontSize: 14.0, color: Colors.white),
+                              ),
+                              onPressed: () {})),
                     ],
                   ))
             ],

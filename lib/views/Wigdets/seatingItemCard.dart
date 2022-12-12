@@ -5,13 +5,25 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:string_ext/string_ext.dart';
 import 'package:wattsofficeapp/l10n/locale_keys.g.dart';
+import 'package:wattsofficeapp/models/dateModel.dart';
+import 'package:wattsofficeapp/utils/utils.dart';
 import 'package:wattsofficeapp/views/Screens/floorPlanScreen.dart';
 import 'package:wattsofficeapp/views/Wigdets/guestPopUp.dart';
 
+import '../../Controllers/sharedController.dart';
+import '../../models/seatingAndFoodPlanModel.dart';
+
 class SeatingItemCard extends StatefulWidget {
-  final String currentime;
-  const SeatingItemCard({Key? key, required this.currentime}) : super(key: key);
+  final int dateIndex;
+  final List<DateModel> dateData;
+
+  const SeatingItemCard({
+    Key? key,
+    required this.dateIndex,
+    required this.dateData,
+  }) : super(key: key);
 
   @override
   State<SeatingItemCard> createState() => _SeatingItemCardState();
@@ -20,187 +32,371 @@ class SeatingItemCard extends StatefulWidget {
 class _SeatingItemCardState extends State<SeatingItemCard> {
   int guests = 0;
   int seatsAvaible = 29;
-  int seatsTaken = 29;
-  int currentAnswer = 1;
+  int seatsTaken = 0;
+  int whereAreYou = 1;
+  int seatNumber = 0;
+  int? userIndex = 0;
+  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Card(
-        elevation: 5,
-        shape:
-            RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8)),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: Color(0xFFF5F5F5),
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    ' - ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  Text(
-                    " ",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+    return StreamBuilder<List<SeatingAndFoodPlanModel>>(
+        stream: SharedController.getData(Utils.dateFormat
+            .format(widget.dateData[widget.dateIndex].date!)
+            .toString()),
+        builder: (context, snapshot1) {
+          final data = snapshot1.data;
+          double width = MediaQuery.of(context).size.width;
+
+          switch (snapshot1.connectionState) {
+            case ConnectionState.waiting:
+            default:
+              date = widget.dateData[widget.dateIndex].date!;
+              seatsTaken = widget.dateData[widget.dateIndex].seatsTaken!;
+              if (data == null) {
+              } else {
+                userIndex = Utils().getUserInfo(data!);
+                if (userIndex != null) {
+                  guests = data[userIndex!].guests!;
+                  seatNumber = data[userIndex!].seatNumber!;
+                  whereAreYou = data[userIndex!].whereAreYou!;
+                }
+              }
+
+              return Column(children: [
+                Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(8)),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: Color(0xFFF5F5F5),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        0, width * 0.05, 0, width * 0.05),
                     child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        if (seatsTaken < (seatsAvaible / 2))
-                          Text(
-                            "$seatsTaken/$seatsAvaible",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                                color: Colors.green),
-                          )
-                        else if ((seatsTaken >= (seatsAvaible / 2)) &&
-                            seatsTaken < seatsAvaible)
-                          Text(
-                            "$seatsTaken/$seatsAvaible",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                                color: Color.fromARGB(255, 230, 208, 1)),
-                          )
-                        else if (seatsTaken == seatsAvaible)
-                          Text(
-                            "$seatsTaken/$seatsAvaible",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                                color: Colors.red),
-                          )
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${Utils.dayFormat.format(date).firstToUpper()} - ${Utils.dateFormat.format(date)}  ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: width * 0.05),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                              child: Column(
+                                children: [
+                                  if (seatsTaken < (seatsAvaible / 2))
+                                    Text(
+                                      "$seatsTaken/$seatsAvaible",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: width * 0.05,
+                                          color: Colors.green),
+                                    )
+                                  else if ((seatsTaken >= (seatsAvaible / 2)) &&
+                                      seatsTaken < seatsAvaible)
+                                    Text(
+                                      "$seatsTaken/$seatsAvaible",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: width * 0.05,
+                                          color:
+                                              Color.fromARGB(255, 230, 208, 1)),
+                                    )
+                                  else if (seatsTaken == seatsAvaible)
+                                    Text(
+                                      "$seatsTaken/$seatsAvaible",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: width * 0.05,
+                                          color: Colors.red),
+                                    )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.only(
+                              top: 10,
+                            )),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  height: width * 0.09,
+                                  width: width * 0.30,
+                                  child: FloatingActionButton.extended(
+                                    label: Text(LocaleKeys.atOffice.tr()),
+                                    extendedTextStyle:
+                                        TextStyle(fontSize: width * 0.03),
+                                    backgroundColor: whereAreYou == 0
+                                        ? Colors.green
+                                        : Colors.black,
+                                    icon: Icon(
+                                      Icons.business,
+                                      color: whereAreYou == 0
+                                          ? Colors.white
+                                          : Colors.green,
+                                      size: width * 0.06,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (whereAreYou != 0) {
+                                          SharedController().addLocation(
+                                              Utils.dateFormat
+                                                  .format(date)
+                                                  .toString(),
+                                              0,
+                                              false);
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                    height: width * 0.09,
+                                    width: width * 0.30,
+                                    child: FloatingActionButton.extended(
+                                      label: Text(LocaleKeys.atHome.tr()),
+                                      extendedTextStyle:
+                                          TextStyle(fontSize: width * 0.03),
+                                      backgroundColor: whereAreYou == 1
+                                          ? Color.fromARGB(255, 230, 208, 1)
+                                          : Colors.black,
+                                      icon: Icon(
+                                        Icons.house,
+                                        color: whereAreYou == 1
+                                            ? Colors.white
+                                            : Color.fromARGB(255, 230, 208, 1),
+                                        size: width * 0.06,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (whereAreYou != 1) {
+                                            SharedController().addLocation(
+                                                Utils.dateFormat
+                                                    .format(date)
+                                                    .toString(),
+                                                1,
+                                                true);
+                                          }
+                                        });
+                                      },
+                                    )),
+                                SizedBox(
+                                    height: width * 0.09,
+                                    width: width * 0.30,
+                                    child: FloatingActionButton.extended(
+                                      label:
+                                          Text(LocaleKeys.sickOrVacation.tr()),
+                                      extendedTextStyle:
+                                          TextStyle(fontSize: width * 0.03),
+                                      backgroundColor: whereAreYou == 2
+                                          ? Colors.red
+                                          : Colors.black,
+                                      icon: Icon(
+                                        Icons.close_outlined,
+                                        color: whereAreYou == 2
+                                            ? Colors.white
+                                            : Colors.red,
+                                        size: width * 0.06,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (whereAreYou != 2) {
+                                            SharedController().addLocation(
+                                                Utils.dateFormat
+                                                    .format(date)
+                                                    .toString(),
+                                                2,
+                                                true);
+                                          }
+                                        });
+                                      },
+                                    )),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(
+                                  top: 20,
+                                )),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (seatNumber == 0) ...[
+                                  SizedBox(
+                                      height: width * 0.09,
+                                      width: width * 0.30,
+                                      child: FloatingActionButton.extended(
+                                        label: Text("Tilføj plads"),
+                                        extendedTextStyle:
+                                            TextStyle(fontSize: width * 0.03),
+                                        backgroundColor: Colors.black,
+                                        icon: Icon(
+                                          Icons.desk,
+                                          color: Colors.green,
+                                          size: width * 0.06,
+                                        ),
+                                        onPressed: () {
+                                          GuestPopUp(
+                                              context,
+                                              Utils.dateFormat
+                                                  .format(date)
+                                                  .toString(),
+                                              guests);
+                                        },
+                                      )),
+                                ] else ...[
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                          height: width * 0.09,
+                                          width: width * 0.30,
+                                          child: FloatingActionButton.extended(
+                                            label: Text("Rediger plads"),
+                                            extendedTextStyle: TextStyle(
+                                                fontSize: width * 0.03),
+                                            backgroundColor: Colors.green,
+                                            icon: Icon(
+                                              Icons.desk,
+                                              color: Colors.white,
+                                              size: width * 0.06,
+                                            ),
+                                            onPressed: () {
+                                              GuestPopUp(
+                                                  context,
+                                                  Utils.dateFormat
+                                                      .format(date)
+                                                      .toString(),
+                                                  guests);
+                                            },
+                                          )),
+                                      TextButton(
+                                          onPressed: () {
+                                            SharedController().removeSeat(
+                                              Utils.dateFormat
+                                                  .format(date)
+                                                  .toString(),
+                                            );
+                                          },
+                                          child: Text(
+                                            "Slet plads",
+                                            style: TextStyle(
+                                              fontSize: width * 0.04,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                                if (guests == 0) ...[
+                                  SizedBox(
+                                      height: width * 0.09,
+                                      width: width * 0.30,
+                                      child: FloatingActionButton.extended(
+                                        label: Text(LocaleKeys.addGuests.tr()),
+                                        extendedTextStyle:
+                                            TextStyle(fontSize: width * 0.03),
+                                        backgroundColor: Colors.black,
+                                        icon: Icon(
+                                          Icons.people,
+                                          color: Colors.blue,
+                                          size: width * 0.06,
+                                        ),
+                                        onPressed: () {
+                                          GuestPopUp(
+                                              context,
+                                              Utils.dateFormat
+                                                  .format(date)
+                                                  .toString(),
+                                              guests);
+                                        },
+                                      )),
+                                ] else ...[
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                          height: width * 0.09,
+                                          width: width * 0.30,
+                                          child: FloatingActionButton.extended(
+                                            label: Text(
+                                                LocaleKeys.editGuests.tr()),
+                                            extendedTextStyle: TextStyle(
+                                                fontSize: width * 0.03),
+                                            backgroundColor: Colors.blue,
+                                            icon: Icon(
+                                              Icons.people,
+                                              color: Colors.white,
+                                              size: width * 0.06,
+                                            ),
+                                            onPressed: () {
+                                              GuestPopUp(
+                                                  context,
+                                                  Utils.dateFormat
+                                                      .format(date)
+                                                      .toString(),
+                                                  guests);
+                                            },
+                                          )),
+                                      TextButton(
+                                          onPressed: () {
+                                            SharedController().addGuests(
+                                                Utils.dateFormat
+                                                    .format(date)
+                                                    .toString(),
+                                                0);
+                                          },
+                                          child: Text(
+                                            LocaleKeys.signIn.tr(),
+                                            style: TextStyle(
+                                              fontSize: width * 0.04,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                                Padding(
+                                    padding:
+                                        EdgeInsetsDirectional.only(top: 20),
+                                    child: Text(
+                                      "${LocaleKeys.guests.tr()}: $guests",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: width * 0.043),
+                                    ))
+                              ],
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.only(
-                    top: 10,
-                  )),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FloatingActionButton.extended(
-                        label: Text('Kontoret'),
-                        extendedTextStyle: TextStyle(fontSize: 10),
-                        backgroundColor:
-                            currentAnswer == 0 ? Colors.green : Colors.black,
-                        icon: Icon(
-                          Icons.business,
-                          color:
-                              currentAnswer == 0 ? Colors.white : Colors.green,
-                          size: 24.0,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (seatsTaken == seatsAvaible) {
-                              Get.snackbar(
-                                "Ingen siddepladser tilbage",
-                                "Du er stadig blevet tilføjet til madordningen.",
-                                duration: Duration(seconds: 4),
-                                snackPosition: SnackPosition.TOP,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                                borderRadius: 10,
-                                margin: const EdgeInsets.only(
-                                    bottom: 10, left: 10, right: 10),
-                              );
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const FloorPlanScreen()));
-                            }
-                            currentAnswer = 0;
-                          });
-                        },
-                      ),
-                      FloatingActionButton.extended(
-                        label: Text('Hjemme'),
-                        extendedTextStyle: TextStyle(fontSize: 10),
-                        backgroundColor: currentAnswer == 1
-                            ? Color.fromARGB(255, 230, 208, 1)
-                            : Colors.black,
-                        icon: Icon(
-                          Icons.house,
-                          color: currentAnswer == 1
-                              ? Colors.white
-                              : Color.fromARGB(255, 230, 208, 1),
-                          size: 24.0,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            currentAnswer = 1;
-                          });
-                        },
-                      ),
-                      FloatingActionButton.extended(
-                        label: Text('Syg/Ferie'),
-                        extendedTextStyle: TextStyle(fontSize: 10),
-                        backgroundColor:
-                            currentAnswer == 2 ? Colors.red : Colors.black,
-                        icon: Icon(
-                          Icons.close_outlined,
-                          color: currentAnswer == 2 ? Colors.white : Colors.red,
-                          size: 24.0,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            currentAnswer = 2;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(padding: EdgeInsets.only(top: 10)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FloatingActionButton.extended(
-                        label: Text('Tilføj Gæster'),
-                        extendedTextStyle: TextStyle(fontSize: 10),
-                        backgroundColor: Colors.black,
-                        icon: Icon(
-                          Icons.people,
-                          color: Colors.blue,
-                          size: 24.0,
-                        ),
-                        onPressed: () {
-                          GuestPopUp(context);
-                        },
-                      ),
-                      Text(
-                        "Gæster: $guests",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      )
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    ]);
+                ),
+              ]);
+          }
+        });
   }
 }

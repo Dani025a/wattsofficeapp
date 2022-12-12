@@ -10,6 +10,7 @@ import 'package:wattsofficeapp/l10n/locale_keys.g.dart';
 import 'package:wattsofficeapp/models/dateModel.dart';
 import 'package:get/get.dart' hide Trans;
 
+import '../../models/seatingAndFoodPlanModel.dart';
 import '../../utils/utils.dart';
 import '../Wigdets/listCard.dart';
 
@@ -27,6 +28,7 @@ class _ListScreenState extends State<ListScreen> {
   int currentdateindex = 0;
   late int index = currentdateindex;
   late DateTime choosendate = currentime;
+
   @override
   void initState() {
     super.initState();
@@ -35,15 +37,18 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          toolbarHeight: width * 0.1,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.seatingList.tr(),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: width * 0.06,
             ),
           ),
           centerTitle: true,
@@ -58,13 +63,13 @@ class _ListScreenState extends State<ListScreen> {
                     return Center(child: CircularProgressIndicator());
                   default:
                     if (snapshot1.hasError) {
-                      return buildText('Something Went Wrong Try later');
+                      return buildText(LocaleKeys.somethingWentWrong.tr());
                     } else {
                       final datemodel = snapshot1.data;
                       currentdateindex =
                           Utils().getCurrentDate(datemodel!, currentime, false);
                       if (datemodel.isEmpty) {
-                        return buildText('No Data Found');
+                        return buildText(LocaleKeys.noData.tr());
                       } else {
                         return Column(children: <Widget>[
                           Column(children: [
@@ -185,62 +190,39 @@ class _ListScreenState extends State<ListScreen> {
                               ),
                             ),
                           ]),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Search',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                              ),
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                              keyboardType: TextInputType.name,
-                            ),
-                          ),
                         ]);
                       }
                     }
                 }
               }),
-          ListItemCard(
-              currentime: Utils.dateFormat.format(choosendate).toString())
+          StreamBuilder<List<SeatingAndFoodPlanModel>>(
+              stream: SharedController.getData(
+                  Utils.dateFormat.format(choosendate).toString()),
+              builder: (context, snapshot1) {
+                switch (snapshot1.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot1.hasError) {
+                      print(snapshot1.error);
+                      return buildText(LocaleKeys.somethingWentWrong.tr());
+                    } else {
+                      final data = snapshot1.data;
+                      if (data!.isEmpty) {
+                        return buildText(LocaleKeys.noData.tr());
+                      } else {
+                        return Expanded(child: ListItemCard(data: data));
+                      }
+                    }
+                }
+              })
         ]));
   }
 
   Widget buildText(String text) => Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 24, color: Colors.white),
+          style: TextStyle(fontSize: 24, color: Colors.black),
         ),
       );
 }

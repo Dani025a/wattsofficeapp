@@ -62,7 +62,15 @@
   "editGuests": "Edit Guests",
   "addSeat": "Add Seat",
   "editSeat": "Edit Seat",
-  "one": "Room one",
-  "two": "Room two",
-  "search": "Search"
+  "search": "Search",
+  "notifications": "Notifications",
+  "noData": "No Data Found.",
+  "noUsers": "No Users Found.",
+  "somethingWentWrong": "Something Went Wrong.",
+  "roomOne": "One",
+  "roomTwo": "Two",
+  "cancel": "Cancel",
+  "add": "Add",
+  "name": "Name",
+  "seatNumber": "Seat number"
 }

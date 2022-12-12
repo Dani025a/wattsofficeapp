@@ -3,18 +3,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:wattsofficeapp/l10n/locale_keys.g.dart';
 import 'package:wattsofficeapp/models/seatingAndFoodPlanModel.dart';
 
-import '../../Controllers/sharedController.dart';
 
 class ListItemCard extends StatefulWidget {
-  final String currentime;
+  final List<SeatingAndFoodPlanModel> data;
   const ListItemCard({
     Key? key,
-    required this.currentime,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -22,100 +20,129 @@ class ListItemCard extends StatefulWidget {
 }
 
 class _ListItemCardState extends State<ListItemCard> {
-  late final Stream<List<SeatingAndFoodPlanModel>> streamData;
-  @override
-  void initState() {
-    super.initState();
-    streamData = SharedController.getData(widget.currentime);
-  }
+  late List<SeatingAndFoodPlanModel> users = widget.data;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<SeatingAndFoodPlanModel>>(
-        stream: SharedController.getData(widget.currentime.toString()),
-        builder: (context, snapshot1) {
-          switch (snapshot1.connectionState) {
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            default:
-              if (snapshot1.hasError) {
-                print(snapshot1.error);
-                return buildText('Something Went Wrong Try later');
-              } else {
-                final data = snapshot1.data;
-                if (data!.isEmpty) {
-                  return buildText('No Users Found');
-                } else {
-                  return Expanded(
-                      child: ListView(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: data.map(cardUserData).toList(),
-                  ));
-                }
-              }
-          }
-        });
-  }
-
-  Widget cardUserData(SeatingAndFoodPlanModel data) => Card(
-        color: Color(0xFFF5F5F5),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    final controller = TextEditingController();
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: LocaleKeys.search.tr(),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0x00000000),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0x00000000),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              errorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0x00000000),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Color(0x00000000),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              filled: true,
+            ),
+            style: TextStyle(
+              fontSize: 14,
+            ),
+            keyboardType: TextInputType.name,
+            onChanged: searchUser,
+          ),
+        ),
+        Expanded(
+            child: ListView.builder(
+          itemCount: users.length,
+          itemBuilder: ((context, index) {
+            final item = users[index];
+            return Card(
+              color: Color(0xFFF5F5F5),
+              child: Column(
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                        child: SelectionArea(
-                            child: Text(
-                          'Navn: ${data.firstName} ${data.lastName}',
-                        )),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      if (data.whereAreYou == 0) ...[
-                        Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                            child: Text("På kontoret",
-                                style: TextStyle(color: Colors.green)))
-                      ] else if (data.whereAreYou == 1) ...[
-                        Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 0, 20, 0),
-                            child: Text("Hjemme",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 230, 208, 1)))),
-                      ] else if (data.whereAreYou == 2) ...[
-                        Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                            child: Text("Syg eller på ferie",
-                                style: TextStyle(color: Colors.red)))
-                      ]
-                    ],
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              child: SelectionArea(
+                                  child: Text(
+                                '${LocaleKeys.name.tr()}: ${item.firstName} ${item.lastName}',
+                              )),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            if (item.whereAreYou == 0) ...[
+                              Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 20, 0),
+                                  child: Text(LocaleKeys.atOffice.tr(),
+                                      style: TextStyle(color: Colors.green)))
+                            ] else if (item.whereAreYou == 1) ...[
+                              Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      15, 0, 20, 0),
+                                  child: Text(LocaleKeys.atHome.tr(),
+                                      style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 230, 208, 1)))),
+                            ] else if (item.whereAreYou == 2) ...[
+                              Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 20, 0),
+                                  child: Text(LocaleKeys.sickOrVacation.tr(),
+                                      style: TextStyle(color: Colors.red)))
+                            ]
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      );
-  Widget buildText(String text) => Center(
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 24, color: Colors.black),
-        ),
-      );
+            );
+          }),
+        ))
+      ],
+    );
+  }
+
+  void searchUser(String query) {
+    final suggestions = widget.data.where((item) {
+      final firstName =
+          "${item.firstName!.toLowerCase()} ${item.lastName!.toLowerCase()}";
+      final input = query.toLowerCase();
+      return firstName.contains(input);
+    }).toList();
+
+    setState(() => users = suggestions);
+  }
 }

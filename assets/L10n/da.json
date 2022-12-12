@@ -62,8 +62,15 @@
   "editGuests": "Rediger Gæster",
   "addSeat": "Tilføj Plads",
   "editSeat": "Rediger Plads",
-  "one": "Lokale et",
-  "two": "Lokale to",
   "search": "Søg",
-  "Notifications": "Notifikationer"
+  "notifications": "Notifikationer",
+  "noData": "Ingen data fundet.",
+  "noUsers": "Ingen brugere fundet.",
+  "somethingWentWrong": "Noget gik galt.",
+  "roomOne": "Et",
+  "roomTwo": "To",
+  "cancel": "Annuler",
+  "add": "Tilføj",
+  "name": "Navn",
+  "seatNumber": "Siddeplads nummer"
 }

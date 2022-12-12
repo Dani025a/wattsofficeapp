@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:wattsofficeapp/l10n/locale_keys.g.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
+
+
 
 Future<void> SeatInfoPopUp(BuildContext context, String firstName,
     String lastName, String initials, int seatNumber) async {
@@ -21,7 +25,7 @@ Future<void> SeatInfoPopUp(BuildContext context, String firstName,
                 child: Row(
                   children: [
                     Text(
-                      "Navn: ",
+                      "${LocaleKeys.name.tr()}: ",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
@@ -34,7 +38,7 @@ Future<void> SeatInfoPopUp(BuildContext context, String firstName,
                 child: Row(
                   children: [
                     Text(
-                      "Initialer: ",
+                      "${LocaleKeys.initials.tr()}: ",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
@@ -47,7 +51,7 @@ Future<void> SeatInfoPopUp(BuildContext context, String firstName,
                   child: Row(
                     children: [
                       Text(
-                        "Siddeplads nummer: ",
+                        "${LocaleKeys.seatNumber.tr()}: ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),

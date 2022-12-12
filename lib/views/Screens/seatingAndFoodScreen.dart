@@ -15,6 +15,7 @@ import 'package:wattsofficeapp/views/Wigdets/seatingItemCard.dart';
 import 'package:wattsofficeapp/utils/utils.dart' as dateUtils;
 import 'package:get/get.dart' hide Trans;
 
+import '../../models/seatingAndFoodPlanModel.dart';
 import '../../utils/utils.dart';
 
 class SeatingAndFoodScreen extends StatefulWidget {
@@ -30,6 +31,9 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
   late final Stream<List<DateModel>> streamData;
   int currentdateindex = 0;
   late int index = currentdateindex;
+  int weekNumber = 0;
+  late int cardIndex = currentdateindex;
+  late int stopIndex = currentdateindex - 4;
   @override
   void initState() {
     super.initState();
@@ -39,16 +43,18 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          toolbarHeight: width * 0.1,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.floorPlan.tr(),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: width * 0.06,
             ),
           ),
           centerTitle: true,
@@ -63,15 +69,25 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                     return Center(child: CircularProgressIndicator());
                   default:
                     if (snapshot1.hasError) {
-                      return buildText('Something Went Wrong Try later');
+                      return buildText(LocaleKeys.somethingWentWrong.tr());
                     } else {
-                      final datemodel = snapshot1.data;
-                      if (datemodel!.isEmpty) {
-                        return buildText('No Data Found');
+                      final datamodel = snapshot1.data;
+                      if (datamodel!.isEmpty) {
+                        return buildText(LocaleKeys.noData.tr());
                       } else {
                         currentdateindex =
-                            Utils().getCurrentDate(datemodel, currentime, true);
-                        return Column(children: <Widget>[
+                            Utils().getCurrentDate(datamodel, currentime, true);
+                        weekNumber = Utils().weekNumber(currentime, true);
+                        if (index == 4) {
+                          stopIndex = 0;
+                        }
+                        final children = <Widget>[];
+                        for (cardIndex; cardIndex >= stopIndex; cardIndex--) {
+                          children.add(SeatingItemCard(
+                              dateIndex: cardIndex, dateData: datamodel));
+                        }
+                        return Expanded(
+                            child: Column(children: [
                           Column(children: [
                             Padding(
                               padding:
@@ -93,10 +109,17 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                               setState(() {
                                                 setState(() {
                                                   if (index !=
-                                                      datemodel.length - 1) {
+                                                      datamodel.length - 1) {
                                                     index = index + 5;
                                                     currentime =
-                                                        datemodel[index].date!;
+                                                        datamodel[index].date!;
+                                                    weekNumber = Utils()
+                                                        .weekNumber(
+                                                            currentime, true);
+                                                    cardIndex = index;
+                                                    stopIndex = index - 4;
+                                                  } else {
+                                                    cardIndex = index;
                                                   }
                                                 });
                                               });
@@ -106,10 +129,31 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    5, 0, 5, 0),
+                                                    5, 0, 5, 5),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .only(bottom: 5),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "${LocaleKeys.week.tr()} $weekNumber",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                                 Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -117,7 +161,7 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "${Utils.dateFormat.format(datemodel[index].date!)} - ${Utils.dateFormat.format(datemodel[index - 4].date!)}",
+                                                      "${Utils.dateFormat.format(datamodel[index].date!)} - ${Utils.dateFormat.format(datamodel[index - 4].date!)}",
                                                       style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight:
@@ -157,7 +201,15 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                                 if (index != 0 && index != 4) {
                                                   index = index - 5;
                                                   currentime =
-                                                      datemodel[index].date!;
+                                                      datamodel[index].date!;
+                                                  weekNumber = Utils()
+                                                      .weekNumber(
+                                                          currentime, true);
+                                                  cardIndex = index;
+                                                  stopIndex = index - 4;
+                                                } else {
+                                                  cardIndex = index;
+                                                  stopIndex = 0;
                                                 }
                                               });
                                             },
@@ -172,7 +224,14 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                               ),
                             ),
                           ]),
-                        ]);
+                          Expanded(
+                            child: ListView(shrinkWrap: true, children: [
+                              Column(
+                                children: children,
+                              ),
+                            ]),
+                          )
+                        ]));
                       }
                     }
                 }

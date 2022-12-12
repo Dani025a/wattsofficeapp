@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: PageStorage(
         child: currentScreen,
@@ -37,12 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomAppBar(
         child: Container(
           color: Colors.black,
-          height: 60,
+          height: width * 0.16,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     child: MaterialButton(
@@ -58,13 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icon(
                             Icons.desk,
                             color: currentTab == 0 ? Colors.blue : Colors.white,
+                            size: width * 0.06,
                           ),
                           Text(
                             LocaleKeys.seating.tr(),
                             style: TextStyle(
                               color:
                                   currentTab == 0 ? Colors.blue : Colors.white,
-                              fontSize: 8,
+                              fontSize: width * 0.025,
                             ),
                           )
                         ],
@@ -85,13 +88,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icon(
                             Icons.house,
                             color: currentTab == 1 ? Colors.blue : Colors.white,
+                            size: width * 0.06,
                           ),
                           Text(
                             LocaleKeys.floorPlan.tr(),
                             style: TextStyle(
                               color:
                                   currentTab == 1 ? Colors.blue : Colors.white,
-                              fontSize: 8,
+                              fontSize: width * 0.025,
                             ),
                           )
                         ],
@@ -112,13 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icon(
                             Icons.list,
                             color: currentTab == 2 ? Colors.blue : Colors.white,
+                            size: width * 0.06,
                           ),
                           Text(
                             LocaleKeys.seatingList.tr(),
                             style: TextStyle(
                               color:
                                   currentTab == 2 ? Colors.blue : Colors.white,
-                              fontSize: 8,
+                              fontSize: width * 0.025,
                             ),
                           )
                         ],
@@ -139,13 +144,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icon(
                             Icons.settings,
                             color: currentTab == 3 ? Colors.blue : Colors.white,
+                            size: width * 0.06,
                           ),
                           Text(
                             LocaleKeys.settings.tr(),
                             style: TextStyle(
                               color:
                                   currentTab == 3 ? Colors.blue : Colors.white,
-                              fontSize: 8,
+                              fontSize: width * 0.025,
                             ),
                           )
                         ],

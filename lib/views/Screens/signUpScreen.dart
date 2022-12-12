@@ -32,15 +32,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     AuthController authController = Get.put(AuthController());
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: width * 0.1,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.signUp.tr(),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: width * 0.06,
             ),
           ),
           actions: [],
@@ -390,7 +392,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 40,
                             minWidth: 110,
                             shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(8)),
+                                borderRadius: BorderRadius.circular(8)),
                             color: Colors.black,
                             child: Text(
                               LocaleKeys.signUp.tr(),

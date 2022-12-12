@@ -26,22 +26,6 @@ class FloorPlanTwo extends StatefulWidget {
 
 class _FloorPlanTwoState extends State<FloorPlanTwo> {
   late final Stream<List<SeatingAndFoodPlanModel>> streamData;
-  late Timer timer;
-  late AnimationController _controller;
-  bool isLoading = false;
-  void startTimer() {
-    Timer.periodic(const Duration(seconds: 15), (t) {
-      setState(() {
-        isLoading = false; //set loading to false
-      });
-      t.cancel(); //stops the timer
-    });
-  }
-
-  void initState() {
-    super.initState();
-    startTimer();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +39,33 @@ class _FloorPlanTwoState extends State<FloorPlanTwo> {
           final data = snapshot1.data;
           switch (snapshot1.connectionState) {
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return Expanded(
+                  child: ListView(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      children: [
+                    Stack(children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                width: width,
+                                child: Stack(children: [
+                                  Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, width * 0.032, 0, 0),
+                                      child: Image.asset(
+                                        'assets/Rooms.png',
+                                        fit: BoxFit.cover,
+                                        width: width,
+                                      )),
+                                ]))
+                          ])
+                    ])
+                  ]));
             default:
-              userIndex = Utils()
-                  .getUserInfo(data!, FirebaseAuth.instance.currentUser!.uid);
+              userIndex = Utils().getUserInfo(data!);
               return Expanded(
                   child: ListView(
                 padding: EdgeInsets.zero,

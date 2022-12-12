@@ -27,16 +27,18 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     AuthController authController = Get.put(AuthController());
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: width * 0.1,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.signIn.tr(),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: width * 0.06,
             ),
           ),
           actions: [],

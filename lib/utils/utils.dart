@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wattsofficeapp/models/seatingAndFoodPlanModel.dart';
 
 import '../models/dateModel.dart';
@@ -41,8 +42,19 @@ class Utils {
     }
   }
 
-  getUserInfo(final List<SeatingAndFoodPlanModel> data, String uid) {
+  int weekNumber(DateTime date, bool seatingAndFoodScreen) {
+    if (seatingAndFoodScreen == true) {
+      date =
+          DateTime(date.year, date.month, date.day - ((date.weekday % 7) - 1));
+    }
+
+    int dayOfYear = int.parse(DateFormat("D").format(date));
+    return ((dayOfYear - date.weekday + 10) / 7).floor();
+  }
+
+  getUserInfo(final List<SeatingAndFoodPlanModel> data) {
     int? userIndex;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     {
       for (int i = 0; i < data.length; i++) {
         if (uid == data[i].uid) {

@@ -3,6 +3,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:string_ext/string_ext.dart';
 import 'package:wattsofficeapp/Controllers/sharedController.dart';
 import 'package:wattsofficeapp/l10n/locale_keys.g.dart';
@@ -43,16 +44,18 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: width * 0.1,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.floorPlan.tr(),
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: width * 0.06,
             ),
           ),
           centerTitle: true,
@@ -67,20 +70,20 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                     return Center(child: CircularProgressIndicator());
                   default:
                     if (snapshot1.hasError) {
-                      return buildText('Something Went Wrong Try later');
+                      return buildText(LocaleKeys.somethingWentWrong.tr());
                     } else {
                       final datemodel = snapshot1.data;
 
                       if (datemodel!.isEmpty) {
-                        return buildText('No Data Found');
+                        return buildText(LocaleKeys.noData.tr());
                       } else {
                         currentdateindex = Utils()
                             .getCurrentDate(datemodel, currentime, false);
                         return Column(children: <Widget>[
                           Column(children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, width * 0.04, 0, 0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -104,12 +107,18 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                                 }
                                               });
                                             },
-                                            child: Icon(Icons.arrow_back_ios),
+                                            child: Icon(
+                                              Icons.arrow_back_ios,
+                                              size: width * 0.05,
+                                            ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    5, 0, 5, 0),
+                                                    width * 0.01,
+                                                    0,
+                                                    width * 0.01,
+                                                    0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -123,7 +132,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                                       Text(
                                                         "${Utils.dayFormat.format(datemodel[index].date!).firstToUpper()} ",
                                                         style: TextStyle(
-                                                          fontSize: 17,
+                                                          fontSize:
+                                                              width * 0.05,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -136,9 +146,11 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      "${Utils.dateFormat.format(datemodel[index].date!)}",
+                                                      Utils.dateFormat.format(
+                                                          datemodel[index]
+                                                              .date!),
                                                       style: TextStyle(
-                                                        fontSize: 17,
+                                                        fontSize: width * 0.05,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -154,13 +166,18 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                                     Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .only(top: 5),
+                                                                .only(
+                                                                    top: width *
+                                                                        0.015,
+                                                                    bottom: width *
+                                                                        0.015),
                                                         child: Text(
                                                           LocaleKeys
                                                               .whereareyourcoworkers
                                                               .tr(),
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                            fontSize:
+                                                                width * 0.035,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -180,8 +197,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                                 }
                                               });
                                             },
-                                            child:
-                                                Icon(Icons.arrow_forward_ios),
+                                            child: Icon(Icons.arrow_forward_ios,
+                                                size: width * 0.05),
                                           ),
                                         ],
                                       ),
@@ -207,14 +224,18 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                             ),
                             children: [
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12),
-                                child:
-                                    Text('One', style: TextStyle(fontSize: 18)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.15,
+                                    vertical: width * 0.03),
+                                child: Text(LocaleKeys.roomOne.tr(),
+                                    style: TextStyle(fontSize: width * 0.055)),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12),
-                                child:
-                                    Text('Two', style: TextStyle(fontSize: 18)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.15,
+                                    vertical: width * 0.03),
+                                child: Text(LocaleKeys.roomTwo.tr(),
+                                    style: TextStyle(fontSize: width * 0.055)),
                               ),
                             ],
                             onPressed: (int newIndex) {

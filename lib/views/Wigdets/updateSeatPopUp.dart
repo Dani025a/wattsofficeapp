@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:wattsofficeapp/Controllers/sharedController.dart';
-import 'package:wattsofficeapp/models/seatingAndFoodPlanModel.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 Future<void> UpdateSeatPopUp(
     BuildContext context, String date, int seatNumber) async {
@@ -54,7 +53,10 @@ Future<void> UpdateSeatPopUp(
                     style: TextStyle(fontSize: 14.0, color: Colors.white),
                   ),
                   onPressed: () {
-                    SharedController().addSeat(date, seatNumber,);
+                    SharedController().addSeat(
+                      date,
+                      seatNumber,
+                    );
                     Navigator.pop(context);
                   })
             ])
