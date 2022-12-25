@@ -72,5 +72,17 @@
   "cancel": "Annuler",
   "add": "Tilføj",
   "name": "Navn",
-  "seatNumber": "Siddeplads nummer"
+  "seatNumber": "Siddeplads nummer",
+  "notificationSettings": "Notifikations Indstillinger",
+  "turnNotificationOff": "Slå Notifikationer Fra",
+  "fridayNotification": "Fredag 08:00",
+  "thursdayNotification": "Fredag 20:00",
+  "general": "Generale",
+  "alwaysAtOffice": "Altid på kontoret",
+  "editPermanentSeat": "Rediger Permanent Plads",
+  "addPermanentSeat": "Tilføj Permanent Plads",
+  "deletePermanentSeat": "Slet Permanent Plads",
+  "signOut": "Log Ud",
+  "delteGuests": "Slet Gæster",
+  "deleteSeat": "Slet Plads"
 }

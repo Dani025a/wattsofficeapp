@@ -53,6 +53,7 @@ dependencies:
   json_annotation: ^4.7.0
   string_ext: ^0.2.0
   uuid: ^3.0.6
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -83,8 +84,6 @@ flutter:
     - assets/wattslogogif.gif
     - assets/l10n/
     - assets/deskIcon.png
-    - assets/roomOne.png
-    - assets/roomTwo.png
     - assets/Rooms.png
     - assets/Stairs.png
     - assets/door.png

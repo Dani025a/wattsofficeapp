@@ -72,5 +72,17 @@
   "cancel": "Cancel",
   "add": "Add",
   "name": "Name",
-  "seatNumber": "Seat number"
+  "seatNumber": "Seat number",
+  "notificationSettings": "Notifications Settings",
+  "turnNotificationOff": "Turn Notifications Off",
+  "fridayNotification": "Friday 08:00 AM",
+  "thursdayNotification": "Thursday 08:00 PM",
+  "general": "General",
+  "alwaysAtOffice": "Always At Office",
+  "editPermanentSeat": "Edit Permanent Seat",
+  "addPermanentSeat": "Add Permanent Seat",
+  "deletePermanentSeat": "Delete Permanent Seat",
+  "signOut": "Sign Out",
+  "delteGuests": "Delete Guests",
+  "deleteSeat": "Delete Seat"
 }

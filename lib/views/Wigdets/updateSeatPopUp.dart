@@ -37,7 +37,7 @@ Future<void> UpdateSeatPopUp(
                   color: Colors.red,
                   child: Text(
                     "Annuller",
-                    style: TextStyle(fontSize: 14.0, color: Colors.white),
+                    style: TextStyle(fontSize:  14.0, color: Colors.white),
                   ),
                   onPressed: () {
                     Navigator.pop(context);

@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wattsofficeapp/views/Screens/signInScreen.dart';
 import 'package:get/get.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,8 +10,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'l10n/L10n.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized().obs();
-  await EasyLocalization.ensureInitialized().obs();
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   runApp(EasyLocalization(
     supportedLocales: L10n.all,
@@ -21,11 +22,24 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Widget build(BuildContext context) => MaterialApp(
-        localizationsDelegates: context.localizationDelegates.obs(),
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        home: SignInScreen(),
-        navigatorKey: Get.key,
-      );
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: child!,
+        );
+      },
+      localizationsDelegates: context.localizationDelegates.obs(),
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      home: SignInScreen(),
+      navigatorKey: Get.key,
+    );
+  }
 }

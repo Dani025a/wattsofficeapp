@@ -44,10 +44,11 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          toolbarHeight: width * 0.1,
+          toolbarHeight: height * 0.07,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
@@ -90,8 +91,8 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                             child: Column(children: [
                           Column(children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, height * 0.03, 0, 0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -104,39 +105,48 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                setState(() {
-                                                  if (index !=
-                                                      datamodel.length - 1) {
-                                                    index = index + 5;
-                                                    currentime =
-                                                        datamodel[index].date!;
-                                                    weekNumber = Utils()
-                                                        .weekNumber(
-                                                            currentime, true);
-                                                    cardIndex = index;
-                                                    stopIndex = index - 4;
-                                                  } else {
-                                                    cardIndex = index;
-                                                  }
-                                                });
-                                              });
-                                            },
-                                            child: Icon(Icons.arrow_back_ios),
-                                          ),
+                                          SizedBox(
+                                              height: height * 0.1,
+                                              width: width * 0.2,
+                                              child: MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (index !=
+                                                          datamodel.length -
+                                                              1) {
+                                                        index = index + 5;
+                                                        currentime =
+                                                            datamodel[index]
+                                                                .date!;
+                                                        weekNumber = Utils()
+                                                            .weekNumber(
+                                                                currentime,
+                                                                true);
+                                                        cardIndex = index;
+                                                        stopIndex = index - 4;
+                                                      } else {
+                                                        cardIndex = index;
+                                                      }
+                                                    });
+                                                  },
+                                                  child: SizedBox(
+                                                    height: height * 1,
+                                                    width: width * 1,
+                                                    child: Icon(
+                                                      Icons.arrow_back_ios,
+                                                    ),
+                                                  ))),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    5, 0, 5, 5),
+                                                    height * 0.01,
+                                                    0,
+                                                    height * 0.01,
+                                                    0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .only(bottom: 5),
-                                                  child: Row(
+                                                Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     mainAxisAlignment:
@@ -146,14 +156,13 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                                       Text(
                                                         "${LocaleKeys.week.tr()} $weekNumber",
                                                         style: TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize:
+                                                              width * 0.05,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
+                                                    ]),
                                                 Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -163,7 +172,7 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                                     Text(
                                                       "${Utils.dateFormat.format(datamodel[index].date!)} - ${Utils.dateFormat.format(datamodel[index - 4].date!)}",
                                                       style: TextStyle(
-                                                        fontSize: 17,
+                                                        fontSize: width * 0.042,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -179,13 +188,19 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                                     Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .only(top: 5),
+                                                                .only(
+                                                                    top:
+                                                                        height *
+                                                                            0.01,
+                                                                    bottom:
+                                                                        height *
+                                                                            0.01),
                                                         child: Text(
-                                                          LocaleKeys
-                                                              .whereareyourcoworkers
+                                                          LocaleKeys.whereareyou
                                                               .tr(),
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                            fontSize:
+                                                                width * 0.035,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -195,27 +210,37 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
                                               ],
                                             ),
                                           ),
-                                          MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (index != 0 && index != 4) {
-                                                  index = index - 5;
-                                                  currentime =
-                                                      datamodel[index].date!;
-                                                  weekNumber = Utils()
-                                                      .weekNumber(
-                                                          currentime, true);
-                                                  cardIndex = index;
-                                                  stopIndex = index - 4;
-                                                } else {
-                                                  cardIndex = index;
-                                                  stopIndex = 0;
-                                                }
-                                              });
-                                            },
-                                            child:
-                                                Icon(Icons.arrow_forward_ios),
-                                          ),
+                                          SizedBox(
+                                              height: height * 0.1,
+                                              width: width * 0.2,
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (index != 0 &&
+                                                        index != 4) {
+                                                      index = index - 5;
+                                                      currentime =
+                                                          datamodel[index]
+                                                              .date!;
+                                                      weekNumber = Utils()
+                                                          .weekNumber(
+                                                              currentime, true);
+                                                      cardIndex = index;
+                                                      stopIndex = index - 4;
+                                                    } else {
+                                                      cardIndex = index;
+                                                      stopIndex = 0;
+                                                    }
+                                                  });
+                                                },
+                                                child: SizedBox(
+                                                  height: height * 1,
+                                                  width: width * 1,
+                                                  child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                  ),
+                                                ),
+                                              ))
                                         ],
                                       ),
                                     ],

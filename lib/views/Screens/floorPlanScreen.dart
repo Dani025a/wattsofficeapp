@@ -15,7 +15,7 @@ import '../../models/dateModel.dart';
 import '../../utils/utils.dart';
 
 class FloorPlanScreen extends StatefulWidget {
-  final String? currentime;
+  final DateTime? currentime;
   final bool? popup;
   const FloorPlanScreen({
     Key? key,
@@ -45,10 +45,11 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: width * 0.1,
+          toolbarHeight: height * 0.07,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
@@ -77,13 +78,17 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                       if (datemodel!.isEmpty) {
                         return buildText(LocaleKeys.noData.tr());
                       } else {
+                        if (widget.popup == true) {
+                          currentime = widget.currentime!;
+                          choosendate = widget.currentime!;
+                        }
                         currentdateindex = Utils()
                             .getCurrentDate(datemodel, currentime, false);
                         return Column(children: <Widget>[
                           Column(children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, width * 0.04, 0, 0),
+                                  0, height * 0.03, 0, 0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -96,28 +101,35 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (index !=
-                                                    datemodel.length - 1) {
-                                                  index = index + 1;
-                                                  choosendate =
-                                                      datemodel[index].date!;
-                                                }
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.arrow_back_ios,
-                                              size: width * 0.05,
-                                            ),
-                                          ),
+                                          SizedBox(
+                                              height: height * 0.1,
+                                              width: width * 0.2,
+                                              child: MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (index !=
+                                                          datemodel.length -
+                                                              1) {
+                                                        index = index + 1;
+                                                        choosendate =
+                                                            datemodel[index]
+                                                                .date!;
+                                                      }
+                                                    });
+                                                  },
+                                                  child: SizedBox(
+                                                    height: height * 1,
+                                                    width: width * 1,
+                                                    child: Icon(
+                                                      Icons.arrow_back_ios,
+                                                    ),
+                                                  ))),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    width * 0.01,
+                                                    height * 0.01,
                                                     0,
-                                                    width * 0.01,
+                                                    height * 0.01,
                                                     0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -167,13 +179,14 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                                         padding:
                                                             EdgeInsetsDirectional
                                                                 .only(
-                                                                    top: width *
-                                                                        0.015,
-                                                                    bottom: width *
-                                                                        0.015),
+                                                                    top:
+                                                                        height *
+                                                                            0.01,
+                                                                    bottom:
+                                                                        height *
+                                                                            0.01),
                                                         child: Text(
-                                                          LocaleKeys
-                                                              .whereareyourcoworkers
+                                                          LocaleKeys.whereareyou
                                                               .tr(),
                                                           style: TextStyle(
                                                             fontSize:
@@ -187,19 +200,28 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                               ],
                                             ),
                                           ),
-                                          MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (index != 0) {
-                                                  index = index - 1;
-                                                  choosendate =
-                                                      datemodel[index].date!;
-                                                }
-                                              });
-                                            },
-                                            child: Icon(Icons.arrow_forward_ios,
-                                                size: width * 0.05),
-                                          ),
+                                          SizedBox(
+                                              height: height * 0.1,
+                                              width: width * 0.2,
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (index != 0) {
+                                                      index = index - 1;
+                                                      choosendate =
+                                                          datemodel[index]
+                                                              .date!;
+                                                    }
+                                                  });
+                                                },
+                                                child: SizedBox(
+                                                  height: height * 1,
+                                                  width: width * 1,
+                                                  child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                  ),
+                                                ),
+                                              ))
                                         ],
                                       ),
                                     ],
@@ -257,7 +279,17 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                     }
                 }
               }),
-          if (isSelected[0] == true)
+          if (widget.popup == true) ...[
+            if (isSelected[0] == true)
+              FloorPlanOne(
+                currentime:
+                    Utils.dateFormat.format(widget.currentime!).toString(),
+              )
+            else if (isSelected[1] == true)
+              FloorPlanTwo(
+                  currentime:
+                      Utils.dateFormat.format(widget.currentime!).toString())
+          ] else if (isSelected[0] == true)
             FloorPlanOne(
               currentime: Utils.dateFormat.format(choosendate).toString(),
             )

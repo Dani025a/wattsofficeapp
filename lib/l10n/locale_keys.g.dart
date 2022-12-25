@@ -75,5 +75,17 @@ abstract class  LocaleKeys {
   static const add = 'add';
   static const name = 'name';
   static const seatNumber = 'seatNumber';
+  static const notificationSettings = 'notificationSettings';
+  static const turnNotificationOff = 'turnNotificationOff';
+  static const fridayNotification = 'fridayNotification';
+  static const thursdayNotification = 'thursdayNotification';
+  static const general = 'general';
+  static const alwaysAtOffice = 'alwaysAtOffice';
+  static const editPermanentSeat = 'editPermanentSeat';
+  static const addPermanentSeat = 'addPermanentSeat';
+  static const deletePermanentSeat = 'deletePermanentSeat';
+  static const signOut = 'signOut';
+  static const delteGuests = 'delteGuests';
+  static const deleteSeat = 'deleteSeat';
 
 }

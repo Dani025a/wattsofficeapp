@@ -38,10 +38,12 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          toolbarHeight: width * 0.1,
+          toolbarHeight: height * 0.07,
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
@@ -74,8 +76,8 @@ class _ListScreenState extends State<ListScreen> {
                         return Column(children: <Widget>[
                           Column(children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, height * 0.03, 0, 0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -88,25 +90,36 @@ class _ListScreenState extends State<ListScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                setState(() {
-                                                  if (index !=
-                                                      datemodel.length - 1) {
-                                                    index = index + 1;
-                                                    choosendate =
-                                                        datemodel[index].date!;
-                                                  }
-                                                });
-                                              });
-                                            },
-                                            child: Icon(Icons.arrow_back_ios),
-                                          ),
+                                          SizedBox(
+                                              height: height * 0.1,
+                                              width: width * 0.2,
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (index !=
+                                                        datemodel.length - 1) {
+                                                      index = index + 1;
+                                                      choosendate =
+                                                          datemodel[index]
+                                                              .date!;
+                                                    }
+                                                  });
+                                                },
+                                                child: SizedBox(
+                                                  height: height * 1,
+                                                  width: width * 1,
+                                                  child: Icon(
+                                                    Icons.arrow_back_ios,
+                                                  ),
+                                                ),
+                                              )),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    5, 0, 5, 0),
+                                                    height * 0.01,
+                                                    0,
+                                                    height * 0.01,
+                                                    0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -120,7 +133,8 @@ class _ListScreenState extends State<ListScreen> {
                                                       Text(
                                                         "${Utils.dayFormat.format(datemodel[index].date!).firstToUpper()} ",
                                                         style: TextStyle(
-                                                          fontSize: 17,
+                                                          fontSize:
+                                                              width * 0.05,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -137,7 +151,7 @@ class _ListScreenState extends State<ListScreen> {
                                                           datemodel[index]
                                                               .date!),
                                                       style: TextStyle(
-                                                        fontSize: 17,
+                                                        fontSize: width * 0.05,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -153,13 +167,19 @@ class _ListScreenState extends State<ListScreen> {
                                                     Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .only(top: 5),
+                                                                .only(
+                                                                    top:
+                                                                        height *
+                                                                            0.01,
+                                                                    bottom:
+                                                                        height *
+                                                                            0.01),
                                                         child: Text(
-                                                          LocaleKeys
-                                                              .whereareyourcoworkers
+                                                          LocaleKeys.whereareyou
                                                               .tr(),
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                            fontSize:
+                                                                width * 0.035,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -169,19 +189,29 @@ class _ListScreenState extends State<ListScreen> {
                                               ],
                                             ),
                                           ),
-                                          MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (index != 0) {
-                                                  index = index - 1;
-                                                  choosendate =
-                                                      datemodel[index].date!;
-                                                }
-                                              });
-                                            },
-                                            child:
-                                                Icon(Icons.arrow_forward_ios),
-                                          ),
+                                          SizedBox(
+                                              height: height * 0.1,
+                                              width: width * 0.2,
+                                              child: MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (index !=
+                                                          datemodel.length -
+                                                              1) {
+                                                        index = index + 1;
+                                                        choosendate =
+                                                            datemodel[index]
+                                                                .date!;
+                                                      }
+                                                    });
+                                                  },
+                                                  child: SizedBox(
+                                                    height: height * 1,
+                                                    width: width * 1,
+                                                    child: Icon(
+                                                      Icons.arrow_forward_ios,
+                                                    ),
+                                                  ))),
                                         ],
                                       ),
                                     ],

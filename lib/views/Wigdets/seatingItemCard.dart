@@ -55,7 +55,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
               seatsTaken = widget.dateData[widget.dateIndex].seatsTaken!;
               if (data == null) {
               } else {
-                userIndex = Utils().getUserInfo(data!);
+                userIndex = Utils().getUserInfo(data);
                 if (userIndex != null) {
                   guests = data[userIndex!].guests!;
                   seatNumber = data[userIndex!].seatNumber!;
@@ -71,8 +71,8 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   color: Color(0xFFF5F5F5),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        0, width * 0.05, 0, width * 0.05),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0, width * 0.05, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -134,7 +134,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 SizedBox(
-                                  height: width * 0.09,
+                                  height: width * 0.12,
                                   width: width * 0.30,
                                   child: FloatingActionButton.extended(
                                     label: Text(LocaleKeys.atOffice.tr()),
@@ -165,7 +165,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                   ),
                                 ),
                                 SizedBox(
-                                    height: width * 0.09,
+                                    height: width * 0.12,
                                     width: width * 0.30,
                                     child: FloatingActionButton.extended(
                                       label: Text(LocaleKeys.atHome.tr()),
@@ -195,7 +195,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                       },
                                     )),
                                 SizedBox(
-                                    height: width * 0.09,
+                                    height: width * 0.12,
                                     width: width * 0.30,
                                     child: FloatingActionButton.extended(
                                       label:
@@ -240,34 +240,38 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if (seatNumber == 0) ...[
-                                  SizedBox(
-                                      height: width * 0.09,
-                                      width: width * 0.30,
-                                      child: FloatingActionButton.extended(
-                                        label: Text("Tilføj plads"),
-                                        extendedTextStyle:
-                                            TextStyle(fontSize: width * 0.03),
-                                        backgroundColor: Colors.black,
-                                        icon: Icon(
-                                          Icons.desk,
-                                          color: Colors.green,
-                                          size: width * 0.06,
-                                        ),
-                                        onPressed: () {
-                                          GuestPopUp(
-                                              context,
-                                              Utils.dateFormat
-                                                  .format(date)
-                                                  .toString(),
-                                              guests);
-                                        },
-                                      )),
+                                  Padding(
+                                      padding: EdgeInsetsDirectional.only(
+                                          bottom: width * 0.07),
+                                      child: SizedBox(
+                                          height: width * 0.12,
+                                          width: width * 0.30,
+                                          child: FloatingActionButton.extended(
+                                            label: Text("Tilføj plads"),
+                                            extendedTextStyle: TextStyle(
+                                                fontSize: width * 0.03),
+                                            backgroundColor: Colors.black,
+                                            icon: Icon(
+                                              Icons.desk,
+                                              color: Colors.green,
+                                              size: width * 0.06,
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FloorPlanScreen(
+                                                              currentime: date,
+                                                              popup: true)));
+                                            },
+                                          ))),
                                 ] else ...[
                                   Column(
                                     children: [
                                       SizedBox(
-                                          height: width * 0.09,
-                                          width: width * 0.30,
+                                          height: width * 0.12,
+                                          width: width * 0.33,
                                           child: FloatingActionButton.extended(
                                             label: Text("Rediger plads"),
                                             extendedTextStyle: TextStyle(
@@ -296,7 +300,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                             );
                                           },
                                           child: Text(
-                                            "Slet plads",
+                                            LocaleKeys.deleteSeat.tr(),
                                             style: TextStyle(
                                               fontSize: width * 0.04,
                                               color: Colors.red,
@@ -310,7 +314,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                 ],
                                 if (guests == 0) ...[
                                   SizedBox(
-                                      height: width * 0.09,
+                                      height: width * 0.12,
                                       width: width * 0.30,
                                       child: FloatingActionButton.extended(
                                         label: Text(LocaleKeys.addGuests.tr()),
@@ -323,20 +327,22 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                           size: width * 0.06,
                                         ),
                                         onPressed: () {
-                                          GuestPopUp(
-                                              context,
-                                              Utils.dateFormat
-                                                  .format(date)
-                                                  .toString(),
-                                              guests);
+                                          setState(() {
+                                            GuestPopUp(
+                                                context,
+                                                Utils.dateFormat
+                                                    .format(date)
+                                                    .toString(),
+                                                guests);
+                                          });
                                         },
                                       )),
                                 ] else ...[
                                   Column(
                                     children: [
                                       SizedBox(
-                                          height: width * 0.09,
-                                          width: width * 0.30,
+                                          height: width * 0.12,
+                                          width: width * 0.33,
                                           child: FloatingActionButton.extended(
                                             label: Text(
                                                 LocaleKeys.editGuests.tr()),
@@ -349,12 +355,14 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                               size: width * 0.06,
                                             ),
                                             onPressed: () {
-                                              GuestPopUp(
-                                                  context,
-                                                  Utils.dateFormat
-                                                      .format(date)
-                                                      .toString(),
-                                                  guests);
+                                              setState(() {
+                                                GuestPopUp(
+                                                    context,
+                                                    Utils.dateFormat
+                                                        .format(date)
+                                                        .toString(),
+                                                    guests);
+                                              });
                                             },
                                           )),
                                       TextButton(
@@ -366,7 +374,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                 0);
                                           },
                                           child: Text(
-                                            LocaleKeys.signIn.tr(),
+                                            LocaleKeys.delteGuests.tr(),
                                             style: TextStyle(
                                               fontSize: width * 0.04,
                                               color: Colors.red,
@@ -379,8 +387,8 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                   )
                                 ],
                                 Padding(
-                                    padding:
-                                        EdgeInsetsDirectional.only(top: 20),
+                                    padding: EdgeInsetsDirectional.only(
+                                        top: width * 0.04),
                                     child: Text(
                                       "${LocaleKeys.guests.tr()}: $guests",
                                       style: TextStyle(
