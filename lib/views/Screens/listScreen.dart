@@ -94,25 +94,25 @@ class _ListScreenState extends State<ListScreen> {
                                               height: height * 0.1,
                                               width: width * 0.2,
                                               child: MaterialButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (index !=
-                                                        datemodel.length - 1) {
-                                                      index = index + 1;
-                                                      choosendate =
-                                                          datemodel[index]
-                                                              .date!;
-                                                    }
-                                                  });
-                                                },
-                                                child: SizedBox(
-                                                  height: height * 1,
-                                                  width: width * 1,
-                                                  child: Icon(
-                                                    Icons.arrow_back_ios,
-                                                  ),
-                                                ),
-                                              )),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (index !=
+                                                          datemodel.length -
+                                                              1) {
+                                                        index = index + 1;
+                                                        choosendate =
+                                                            datemodel[index]
+                                                                .date!;
+                                                      }
+                                                    });
+                                                  },
+                                                  child: SizedBox(
+                                                    height: height * 1,
+                                                    width: width * 1,
+                                                    child: Icon(
+                                                      Icons.arrow_back_ios,
+                                                    ),
+                                                  ))),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -193,25 +193,24 @@ class _ListScreenState extends State<ListScreen> {
                                               height: height * 0.1,
                                               width: width * 0.2,
                                               child: MaterialButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (index !=
-                                                          datemodel.length -
-                                                              1) {
-                                                        index = index + 1;
-                                                        choosendate =
-                                                            datemodel[index]
-                                                                .date!;
-                                                      }
-                                                    });
-                                                  },
-                                                  child: SizedBox(
-                                                    height: height * 1,
-                                                    width: width * 1,
-                                                    child: Icon(
-                                                      Icons.arrow_forward_ios,
-                                                    ),
-                                                  ))),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    if (index != 0) {
+                                                      index = index - 1;
+                                                      choosendate =
+                                                          datemodel[index]
+                                                              .date!;
+                                                    }
+                                                  });
+                                                },
+                                                child: SizedBox(
+                                                  height: height * 1,
+                                                  width: width * 1,
+                                                  child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                  ),
+                                                ),
+                                              ))
                                         ],
                                       ),
                                     ],

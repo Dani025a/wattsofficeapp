@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wattsofficeapp/models/seatingAndFoodPlanModel.dart';
+import 'package:wattsofficeapp/models/userModel.dart';
 
 import '../models/dateModel.dart';
 
@@ -42,6 +43,25 @@ class Utils {
     }
   }
 
+  getIndexForPermanentSeat(final List<UserModel> data, int seatNumber) {
+    int? indexNumber;
+    {
+      for (int i = 0; i < data.length; i++) {
+        if (data[i].permanentSeatNumber == null) {
+        } else {
+          if (seatNumber == data[i].permanentSeatNumber) {
+            indexNumber = i;
+          }
+        }
+      }
+      if (indexNumber == null) {
+        return null;
+      } else {
+        return indexNumber;
+      }
+    }
+  }
+
   int weekNumber(DateTime date, bool seatingAndFoodScreen) {
     if (seatingAndFoodScreen == true) {
       date =
@@ -53,6 +73,23 @@ class Utils {
   }
 
   getUserInfo(final List<SeatingAndFoodPlanModel> data) {
+    int? userIndex;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    {
+      for (int i = 0; i < data.length; i++) {
+        if (uid == data[i].uid) {
+          userIndex = i;
+        }
+      }
+      if (userIndex == null) {
+        return null;
+      } else {
+        return userIndex;
+      }
+    }
+  }
+
+  getCurrentUser(final List<UserModel> data) {
     int? userIndex;
     String uid = FirebaseAuth.instance.currentUser!.uid;
     {

@@ -12,7 +12,7 @@ import '../../Controllers/sharedController.dart';
 
 final guestsController = TextEditingController();
 
-Future<void> GuestPopUp(BuildContext context, String id, int guests) async {
+Future<void> GuestPopUp(BuildContext context, String id, int guests,int numberOfMeals) async {
   guestsController.text = guests.toString();
   return showDialog(
       context: context,
@@ -94,7 +94,7 @@ Future<void> GuestPopUp(BuildContext context, String id, int guests) async {
                   ),
                   onPressed: () {
                     SharedController()
-                        .addGuests(id, int.parse(guestsController.text));
+                        .addGuests(id, int.parse(guestsController.text), guests, numberOfMeals);
                     Navigator.pop(context);
                   })
             ])

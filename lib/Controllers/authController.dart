@@ -81,10 +81,15 @@ class AuthController extends GetxController {
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(UserModel(
                     uid: FirebaseAuth.instance.currentUser!.uid,
-                    firsName: firstName,
+                    firstName: firstName,
                     lastName: lastName,
                     email: email,
-                    initials: initials)
+                    initials: initials,
+                    permanentWhereAreYou: false,
+                    permanentSeatNumber: 0,
+                    notificationOff: true,
+                    notificationFridayMorning: false,
+                    notificationThursdayEvening: false)
                 .toJson());
         getSuccessSnackBar(
             "${LocaleKeys.signUpSuccesMessage.tr()} $firstName $lastName");

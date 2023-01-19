@@ -15,7 +15,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(EasyLocalization(
     supportedLocales: L10n.all,
-    path: 'assets/l10n'.obs(),
+    path: 'assets/l10n',
     fallbackLocale: L10n.all[0],
     child: MyApp(),
   ));

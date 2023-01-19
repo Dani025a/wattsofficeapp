@@ -20,8 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> screens = [
     const SeatingAndFoodScreen(),
-    const FloorPlanScreen(),
+    const FloorPlanScreen(
+      popup: false,
+    ),
     const ListScreen(),
+    const SettingsScreen(),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
@@ -78,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: MaterialButton(
                       onPressed: () {
                         setState(() {
-                          currentScreen = FloorPlanScreen();
+                          currentScreen = FloorPlanScreen(
+                            popup: false,
+                          );
                           currentTab = 1;
                         });
                       },

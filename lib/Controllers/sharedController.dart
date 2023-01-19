@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wattsofficeapp/models/dateModel.dart';
 import 'package:wattsofficeapp/models/seatingAndFoodPlanModel.dart';
+import 'package:wattsofficeapp/models/userModel.dart';
 import 'package:wattsofficeapp/views/Wigdets/updateSeatPopUp.dart';
 import 'dart:async';
 
@@ -16,6 +17,12 @@ class SharedController {
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((doc) => DateModel.fromJson(doc.data())).toList());
+
+  static Stream<List<UserModel>> getUsers() => FirebaseFirestore.instance
+      .collection('users')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList());
 
   static Stream<List<SeatingAndFoodPlanModel>> getData(String id) =>
       FirebaseFirestore.instance
@@ -42,11 +49,56 @@ class SharedController {
         .update({'seatNumber': seatnumber, 'whereAreYou': 0});
   }
 
-   void removeSeat(id) async {
+  void addPermanentSeat(seatnumber) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(
+            {'permanentSeatNumber': seatnumber, 'permanentWhereAreYou': true});
+  }
+
+  void changeNotification(notificationOff, notificationFridayMorning,
+      notificationThursdayEvening) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'notificationOff': notificationOff,
+      'notificationFridayMorning': notificationFridayMorning,
+      'notificationThursdayEvening': notificationThursdayEvening
+    });
+  }
+
+  void removeSeat(id) async {
     await FirebaseFirestore.instance
         .collection('seatingAndMealPlan/$id/seatsAndMealPlans')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({'seatNumber': 0,});
+        .update({
+      'seatNumber': 0,
+    });
+  }
+
+  void removePermanentSeat() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'permanentSeatNumber': 0,
+    });
+  }
+
+  void removeAlwaysAtOffice() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({'permanentSeatNumber': 0, 'permanentWhereAreYou': false});
+  }
+
+  void alwaysAtOffice() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({'permanentWhereAreYou': true});
   }
 
   void addLocation(id, whereAreYou, bool fromWhere) async {
@@ -63,10 +115,16 @@ class SharedController {
     }
   }
 
-  void addGuests(id, guests) async {
+  void addGuests(id, newguests, oldguest, numberOfMeals) async {
+    int guests = numberOfMeals + (newguests - oldguest);
     await FirebaseFirestore.instance
         .collection('seatingAndMealPlan/$id/seatsAndMealPlans')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({'guests': guests});
+        .update({'guests': newguests});
+
+    await FirebaseFirestore.instance
+        .collection('seatingAndMealPlan')
+        .doc(id)
+        .update({'numberOdMeals': guests});
   }
 }

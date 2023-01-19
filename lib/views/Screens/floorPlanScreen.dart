@@ -16,11 +16,11 @@ import '../../utils/utils.dart';
 
 class FloorPlanScreen extends StatefulWidget {
   final DateTime? currentime;
-  final bool? popup;
+  final bool popup;
   const FloorPlanScreen({
     Key? key,
     this.currentime,
-    this.popup,
+    required this.popup,
   }) : super(key: key);
 
   @override
@@ -46,6 +46,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    bool popup = widget.popup;
 
     return Scaffold(
         appBar: AppBar(
@@ -78,9 +79,10 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                       if (datemodel!.isEmpty) {
                         return buildText(LocaleKeys.noData.tr());
                       } else {
-                        if (widget.popup == true) {
+                        if (popup == true) {
                           currentime = widget.currentime!;
                           choosendate = widget.currentime!;
+                          popup = false;
                         }
                         currentdateindex = Utils()
                             .getCurrentDate(datemodel, currentime, false);
@@ -279,7 +281,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                     }
                 }
               }),
-          if (widget.popup == true) ...[
+          if (popup == true) ...[
             if (isSelected[0] == true)
               FloorPlanOne(
                 currentime:

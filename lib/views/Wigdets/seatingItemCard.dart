@@ -33,6 +33,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
   int guests = 0;
   int seatsAvaible = 29;
   int seatsTaken = 0;
+  int numberOfMeals = 0;
   int whereAreYou = 1;
   int seatNumber = 0;
   int? userIndex = 0;
@@ -53,6 +54,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
             default:
               date = widget.dateData[widget.dateIndex].date!;
               seatsTaken = widget.dateData[widget.dateIndex].seatsTaken!;
+              numberOfMeals = widget.dateData[widget.dateIndex].seatsTaken!;
               if (data == null) {
               } else {
                 userIndex = Utils().getUserInfo(data);
@@ -288,7 +290,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                   Utils.dateFormat
                                                       .format(date)
                                                       .toString(),
-                                                  guests);
+                                                  guests, numberOfMeals);
                                             },
                                           )),
                                       TextButton(
@@ -333,7 +335,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                 Utils.dateFormat
                                                     .format(date)
                                                     .toString(),
-                                                guests);
+                                                guests, numberOfMeals);
                                           });
                                         },
                                       )),
@@ -361,7 +363,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                     Utils.dateFormat
                                                         .format(date)
                                                         .toString(),
-                                                    guests);
+                                                    guests, numberOfMeals);
                                               });
                                             },
                                           )),
@@ -371,7 +373,7 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                 Utils.dateFormat
                                                     .format(date)
                                                     .toString(),
-                                                0);
+                                                0, guests, numberOfMeals);
                                           },
                                           child: Text(
                                             LocaleKeys.delteGuests.tr(),
