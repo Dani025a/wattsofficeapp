@@ -5,10 +5,13 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:wattsofficeapp/l10n/locale_keys.g.dart';
+import 'package:wattsofficeapp/models/datemodel.dart';
 import 'package:wattsofficeapp/models/userModel.dart';
 import 'package:wattsofficeapp/utils/authErrorMesages.dart';
+import 'package:wattsofficeapp/utils/utils.dart';
 import '../views/Screens/homeScreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
@@ -89,8 +92,33 @@ class AuthController extends GetxController {
                     permanentSeatNumber: 0,
                     notificationOff: true,
                     notificationFridayMorning: false,
-                    notificationThursdayEvening: false)
+                    notificationThursdayEvening: false,
+                    token: await FirebaseMessaging.instance.getToken())
                 .toJson());
+
+        List<DateModel> dates = await FirebaseFirestore.instance
+            .collection('seatingAndMealPlan')
+            .get()
+            .then((snapshot) => snapshot.docs
+                .map((d) => DateModel.fromJson(d.data()))
+                .toList());
+
+        for (var i = 0; i < dates.length; i++) {
+          await FirebaseFirestore.instance
+              .collection('seatingAndMealPlan')
+              .doc(Utils.dateFormat.format(dates[i].date))
+              .collection('seatsAndMealPlans')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set({
+            'uid': FirebaseAuth.instance.currentUser!.uid,
+            'firstName': firstName,
+            'lastName': lastName,
+            'seatNumber': 0,
+            'initials': initials,
+            'guests': 0,
+            'whereAreYou': 1,
+          });
+        }
         getSuccessSnackBar(
             "${LocaleKeys.signUpSuccesMessage.tr()} $firstName $lastName");
       } on FirebaseAuthException catch (e) {
@@ -119,8 +147,8 @@ class AuthController extends GetxController {
     }
   }
 
-  void addNewUser(email, password, firstName, lastName, verificationCode, initials){
-  }
+  void addNewUser(
+      email, password, firstName, lastName, verificationCode, initials) {}
 
   getErrorSnackBar(String message) {
     Get.snackbar(

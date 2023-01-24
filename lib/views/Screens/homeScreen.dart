@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:wattsofficeapp/utils/notifications.dart';
 import 'package:wattsofficeapp/views/Screens/seatingAndFoodScreen.dart';
 import 'package:wattsofficeapp/views/Screens/floorPlanScreen.dart';
 import 'package:wattsofficeapp/views/Screens/listScreen.dart';
@@ -28,6 +30,22 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
+  String notificationMsg = "Waiting for notifications";
+  @override
+  void initState() {
+    super.initState();
+
+    Notifications.initilize();
+
+    FirebaseMessaging.instance.getInitialMessage().then((event) {});
+
+    FirebaseMessaging.onMessage.listen((event) {
+      Notifications.showNotificationOnForeground(event);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {});
+  }
+
   Widget currentScreen = SeatingAndFoodScreen();
 
   @override

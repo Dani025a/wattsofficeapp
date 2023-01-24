@@ -1,4 +1,3 @@
-
 class SeatingAndFoodPlanModel {
   final String? uid;
   final String? firstName;

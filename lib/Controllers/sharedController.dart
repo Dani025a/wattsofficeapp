@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -116,15 +117,17 @@ class SharedController {
   }
 
   void addGuests(id, newguests, oldguest, numberOfMeals) async {
-    int guests = numberOfMeals + (newguests - oldguest);
+    int newNumberOfMeals = numberOfMeals + (newguests - oldguest);
     await FirebaseFirestore.instance
         .collection('seatingAndMealPlan/$id/seatsAndMealPlans')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({'guests': newguests});
+  }
 
+  static Future<void> incrementSeatsTaken(id, seatsTaken) async {
     await FirebaseFirestore.instance
         .collection('seatingAndMealPlan')
         .doc(id)
-        .update({'numberOdMeals': guests});
+        .update({'seatsTaken': seatsTaken + 1});
   }
 }

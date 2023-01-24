@@ -285,12 +285,13 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                               size: width * 0.06,
                                             ),
                                             onPressed: () {
-                                              GuestPopUp(
+                                              Navigator.push(
                                                   context,
-                                                  Utils.dateFormat
-                                                      .format(date)
-                                                      .toString(),
-                                                  guests, numberOfMeals);
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FloorPlanScreen(
+                                                              currentime: date,
+                                                              popup: true)));
                                             },
                                           )),
                                       TextButton(
@@ -335,7 +336,8 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                 Utils.dateFormat
                                                     .format(date)
                                                     .toString(),
-                                                guests, numberOfMeals);
+                                                guests,
+                                                numberOfMeals);
                                           });
                                         },
                                       )),
@@ -363,7 +365,8 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                     Utils.dateFormat
                                                         .format(date)
                                                         .toString(),
-                                                    guests, numberOfMeals);
+                                                    guests,
+                                                    numberOfMeals);
                                               });
                                             },
                                           )),
@@ -373,7 +376,9 @@ class _SeatingItemCardState extends State<SeatingItemCard> {
                                                 Utils.dateFormat
                                                     .format(date)
                                                     .toString(),
-                                                0, guests, numberOfMeals);
+                                                0,
+                                                guests,
+                                                numberOfMeals);
                                           },
                                           child: Text(
                                             LocaleKeys.delteGuests.tr(),
