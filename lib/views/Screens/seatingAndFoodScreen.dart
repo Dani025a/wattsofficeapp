@@ -26,7 +26,8 @@ class SeatingAndFoodScreen extends StatefulWidget {
 }
 
 class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
-  DateTime currentime = DateTime.now();
+  //Change date to "DateTime.now();"
+  DateTime currentime = DateTime.parse("2023-01-16");
 
   late final Stream<List<DateModel>> streamData;
   int currentdateindex = 0;
@@ -52,7 +53,7 @@ class _SeatingAndFoodScreenState extends State<SeatingAndFoodScreen> {
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
           title: Text(
-            LocaleKeys.floorPlan.tr(),
+            LocaleKeys.seating.tr(),
             style: TextStyle(
               color: Colors.white,
               fontSize: width * 0.06,

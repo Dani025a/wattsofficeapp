@@ -109,7 +109,7 @@ class Utils {
   getCurrentDate(final List<DateModel> dateModel, var currentime,
       bool seatingAndFoodScreen) {
     int displayCurrentTime = 0;
-    var now = DateTime.now();
+    var now = currentime;
 
     {
       if (seatingAndFoodScreen == true) {

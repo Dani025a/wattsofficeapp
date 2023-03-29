@@ -13,9 +13,7 @@ Future<void> UpdatePermanentSeatPopUp(
           title: Text('Vil du ændre siddeplads?'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            //position
             mainAxisSize: MainAxisSize.min,
-            // wrap content in flutter
             children: <Widget>[
               Column(
                 children: [
@@ -53,9 +51,7 @@ Future<void> UpdatePermanentSeatPopUp(
                     style: TextStyle(fontSize: 14.0, color: Colors.white),
                   ),
                   onPressed: () {
-                    SharedController().addPermanentSeat(
-                      seatNumber,
-                    );
+                    SharedController().addPermanentSeat(seatNumber);
                     Navigator.pop(context);
                   })
             ])

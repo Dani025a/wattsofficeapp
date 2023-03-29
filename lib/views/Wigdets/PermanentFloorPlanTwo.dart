@@ -59,23 +59,8 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatOne(Utils().getIndexForPermanentSeat(data, 16),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 16);
-
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(16);
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 16);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  16) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    16);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 16);
                             }),
                           ],
                         ),
@@ -87,53 +72,20 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatOne(Utils().getIndexForPermanentSeat(data, 17),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 17);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  17,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 17);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  17) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    17);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 17);
                             }),
                             Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: width * 0.2),
-                                child: seatOne(
-                                    Utils().getIndexForPermanentSeat(data, 18),
-                                    seatwidth,
-                                    data, () {
-                                  int? index = Utils()
-                                      .getIndexForPermanentSeat(data, 18);
-                                  if (index == null &&
-                                      data[userIndex!].permanentSeatNumber ==
-                                          0) {
-                                    SharedController().addPermanentSeat(
-                                      18,
-                                    );
-                                  } else if (index == null) {
-                                    UpdatePermanentSeatPopUp(context, 18);
-                                  } else if (data[userIndex!]
-                                          .permanentSeatNumber !=
-                                      18) {
-                                    SeatInfoPopUp(
-                                        context,
-                                        data[index].firstName,
-                                        data[index].lastName,
-                                        data[index].initials,
-                                        18);
-                                  }
-                                }))
+                              padding: EdgeInsetsDirectional.only(
+                                  start: width * 0.2),
+                              child: seatOne(
+                                  Utils().getIndexForPermanentSeat(data, 18),
+                                  seatwidth,
+                                  data, () {
+                                SharedController()
+                                    .permanentSeat(data, context, 18);
+                              }),
+                            )
                           ],
                         ),
                       ],
@@ -152,24 +104,8 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatTwo(Utils().getIndexForPermanentSeat(data, 19),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 19);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  19,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 19);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  19) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    19);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 19);
                             }),
                           ],
                         ),
@@ -181,53 +117,20 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatTwo(Utils().getIndexForPermanentSeat(data, 20),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 20);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  20,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 20);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  20) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    20);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 20);
                             }),
                             Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: width * 0.2),
-                                child: seatTwo(
-                                    Utils().getIndexForPermanentSeat(data, 21),
-                                    seatwidth,
-                                    data, () {
-                                  int? index = Utils()
-                                      .getIndexForPermanentSeat(data, 21);
-                                  if (index == null &&
-                                      data[userIndex!].permanentSeatNumber ==
-                                          0) {
-                                    SharedController().addPermanentSeat(
-                                      21,
-                                    );
-                                  } else if (index == null) {
-                                    UpdatePermanentSeatPopUp(context, 21);
-                                  } else if (data[userIndex!]
-                                          .permanentSeatNumber !=
-                                      21) {
-                                    SeatInfoPopUp(
-                                        context,
-                                        data[index].firstName,
-                                        data[index].lastName,
-                                        data[index].initials,
-                                        21);
-                                  }
-                                }))
+                              padding: EdgeInsetsDirectional.only(
+                                  start: width * 0.2),
+                              child: seatTwo(
+                                  Utils().getIndexForPermanentSeat(data, 21),
+                                  seatwidth,
+                                  data, () {
+                                SharedController()
+                                    .permanentSeat(data, context, 21);
+                              }),
+                            )
                           ],
                         ),
                       ],
@@ -246,53 +149,20 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatOne(Utils().getIndexForPermanentSeat(data, 22),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 22);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  22,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 22);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  22) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    22);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 22);
                             }),
                             Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: width * 0.2),
-                                child: seatOne(
-                                    Utils().getIndexForPermanentSeat(data, 23),
-                                    seatwidth,
-                                    data, () {
-                                  int? index = Utils()
-                                      .getIndexForPermanentSeat(data, 23);
-                                  if (index == null &&
-                                      data[userIndex!].permanentSeatNumber ==
-                                          0) {
-                                    SharedController().addPermanentSeat(
-                                      23,
-                                    );
-                                  } else if (index == null) {
-                                    UpdatePermanentSeatPopUp(context, 23);
-                                  } else if (data[userIndex!]
-                                          .permanentSeatNumber !=
-                                      23) {
-                                    SeatInfoPopUp(
-                                        context,
-                                        data[index].firstName,
-                                        data[index].lastName,
-                                        data[index].initials,
-                                        23);
-                                  }
-                                }))
+                              padding: EdgeInsetsDirectional.only(
+                                  start: width * 0.2),
+                              child: seatOne(
+                                  Utils().getIndexForPermanentSeat(data, 23),
+                                  seatwidth,
+                                  data, () {
+                                SharedController()
+                                    .permanentSeat(data, context, 23);
+                              }),
+                            )
                           ],
                         ),
                       ],
@@ -303,53 +173,20 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatOne(Utils().getIndexForPermanentSeat(data, 24),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 24);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  24,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 24);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  24) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    24);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 24);
                             }),
                             Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: width * 0.2),
-                                child: seatOne(
-                                    Utils().getIndexForPermanentSeat(data, 25),
-                                    seatwidth,
-                                    data, () {
-                                  int? index = Utils()
-                                      .getIndexForPermanentSeat(data, 25);
-                                  if (index == null &&
-                                      data[userIndex!].permanentSeatNumber ==
-                                          0) {
-                                    SharedController().addPermanentSeat(
-                                      25,
-                                    );
-                                  } else if (index == null) {
-                                    UpdatePermanentSeatPopUp(context, 25);
-                                  } else if (data[userIndex!]
-                                          .permanentSeatNumber !=
-                                      25) {
-                                    SeatInfoPopUp(
-                                        context,
-                                        data[index].firstName,
-                                        data[index].lastName,
-                                        data[index].initials,
-                                        25);
-                                  }
-                                }))
+                              padding: EdgeInsetsDirectional.only(
+                                  start: width * 0.2),
+                              child: seatOne(
+                                  Utils().getIndexForPermanentSeat(data, 25),
+                                  seatwidth,
+                                  data, () {
+                                SharedController()
+                                    .permanentSeat(data, context, 25);
+                              }),
+                            )
                           ],
                         ),
                       ],
@@ -368,53 +205,20 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatTwo(Utils().getIndexForPermanentSeat(data, 26),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 26);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  26,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 26);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  26) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    26);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 26);
                             }),
                             Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: width * 0.2),
-                                child: seatTwo(
-                                    Utils().getIndexForPermanentSeat(data, 27),
-                                    seatwidth,
-                                    data, () {
-                                  int? index = Utils()
-                                      .getIndexForPermanentSeat(data, 27);
-                                  if (index == null &&
-                                      data[userIndex!].permanentSeatNumber ==
-                                          0) {
-                                    SharedController().addPermanentSeat(
-                                      27,
-                                    );
-                                  } else if (index == null) {
-                                    UpdatePermanentSeatPopUp(context, 27);
-                                  } else if (data[userIndex!]
-                                          .permanentSeatNumber !=
-                                      27) {
-                                    SeatInfoPopUp(
-                                        context,
-                                        data[index].firstName,
-                                        data[index].lastName,
-                                        data[index].initials,
-                                        27);
-                                  }
-                                }))
+                              padding: EdgeInsetsDirectional.only(
+                                  start: width * 0.2),
+                              child: seatTwo(
+                                  Utils().getIndexForPermanentSeat(data, 27),
+                                  seatwidth,
+                                  data, () {
+                                SharedController()
+                                    .permanentSeat(data, context, 27);
+                              }),
+                            )
                           ],
                         ),
                       ],
@@ -425,53 +229,20 @@ class _PermanentFloorPlanTwoState extends State<PermanentFloorPlanTwo> {
                           children: [
                             seatTwo(Utils().getIndexForPermanentSeat(data, 28),
                                 seatwidth, data, () {
-                              int? index =
-                                  Utils().getIndexForPermanentSeat(data, 28);
-                              if (index == null &&
-                                  data[userIndex!].permanentSeatNumber == 0) {
-                                SharedController().addPermanentSeat(
-                                  28,
-                                );
-                              } else if (index == null) {
-                                UpdatePermanentSeatPopUp(context, 28);
-                              } else if (data[userIndex!].permanentSeatNumber !=
-                                  28) {
-                                SeatInfoPopUp(
-                                    context,
-                                    data[index].firstName,
-                                    data[index].lastName,
-                                    data[index].initials,
-                                    28);
-                              }
+                              SharedController()
+                                  .permanentSeat(data, context, 28);
                             }),
                             Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: width * 0.2),
-                                child: seatTwo(
-                                    Utils().getIndexForPermanentSeat(data, 29),
-                                    seatwidth,
-                                    data, () {
-                                  int? index = Utils()
-                                      .getIndexForPermanentSeat(data, 29);
-                                  if (index == null &&
-                                      data[userIndex!].permanentSeatNumber ==
-                                          0) {
-                                    SharedController().addPermanentSeat(
-                                      29,
-                                    );
-                                  } else if (index == null) {
-                                    UpdatePermanentSeatPopUp(context, 29);
-                                  } else if (data[userIndex!]
-                                          .permanentSeatNumber !=
-                                      29) {
-                                    SeatInfoPopUp(
-                                        context,
-                                        data[index].firstName,
-                                        data[index].lastName,
-                                        data[index].initials,
-                                        29);
-                                  }
-                                }))
+                              padding: EdgeInsetsDirectional.only(
+                                  start: width * 0.2),
+                              child: seatTwo(
+                                  Utils().getIndexForPermanentSeat(data, 29),
+                                  seatwidth,
+                                  data, () {
+                                SharedController()
+                                    .permanentSeat(data, context, 29);
+                              }),
+                            )
                           ],
                         ),
                       ],

@@ -11,6 +11,10 @@ import 'package:wattsofficeapp/models/userModel.dart';
 import 'package:wattsofficeapp/views/Wigdets/updateSeatPopUp.dart';
 import 'dart:async';
 
+import '../utils/utils.dart';
+import '../views/Wigdets/seatInfoPopUp.dart';
+import '../views/Wigdets/updatePermanentSeatPopUp.dart';
+
 class SharedController {
   static Stream<List<DateModel>> getDates() => FirebaseFirestore.instance
       .collection('seatingAndMealPlan')
@@ -48,14 +52,6 @@ class SharedController {
         .collection('seatingAndMealPlan/$id/seatsAndMealPlans')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({'seatNumber': seatnumber, 'whereAreYou': 0});
-  }
-
-  void addPermanentSeat(seatnumber) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update(
-            {'permanentSeatNumber': seatnumber, 'permanentWhereAreYou': true});
   }
 
   void changeNotification(notificationOff, notificationFridayMorning,
@@ -129,5 +125,27 @@ class SharedController {
         .collection('seatingAndMealPlan')
         .doc(id)
         .update({'seatsTaken': seatsTaken + 1});
+  }
+
+  Future<void> addPermanentSeat(seatnumber) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(
+            {'permanentSeatNumber': seatnumber, 'permanentWhereAreYou': true});
+  }
+
+  Future<void> permanentSeat(data, context, seatnumber) async {
+    Utils().getIndexForPermanentSeat(data, seatnumber);
+    int? index = Utils().getIndexForPermanentSeat(data, seatnumber);
+    int? userIndex = Utils().getCurrentUser(data);
+    if (index == null && data[userIndex!].permanentSeatNumber == 0) {
+      addPermanentSeat(seatnumber);
+    } else if (index == null) {
+      UpdatePermanentSeatPopUp(context, seatnumber);
+    } else if (data[userIndex!].permanentSeatNumber != seatnumber) {
+      SeatInfoPopUp(context, data[index].firstName, data[index].lastName,
+          data[index].initials, seatnumber);
+    }
   }
 }
