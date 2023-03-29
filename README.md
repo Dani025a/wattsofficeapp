@@ -2,15 +2,11 @@
 
 A new Flutter project.
 
-## Getting Started
+This project is created in Flutter using Firebase Authenticaion and Firebase Firestore.<br />
+Not a finished project.
 
-This project is a starting point for a Flutter application.
+### **Login and Signup screens**<br />
+<img src="https://user-images.githubusercontent.com/70882611/228630880-7e376a74-c5af-4d23-b3b3-e7a6e4d4ad31.png" width="200"> <img src="https://user-images.githubusercontent.com/70882611/228631085-2e560bdb-d065-4df2-b6e1-0e93897de9dd.png" width="200">
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### **Rest of the screens**<br />
+<img src="https://user-images.githubusercontent.com/70882611/228630501-041318e3-e226-41df-871b-4f702cedab4c.png" width="200"> <img src="https://user-images.githubusercontent.com/70882611/228630587-205ecf95-a022-45ab-aace-ce77089ae3dc.png" width="200"> <img src="https://user-images.githubusercontent.com/70882611/228630649-7efb2982-26a5-46a2-af21-69126850cf3d.png" width="200"> <img src="https://user-images.githubusercontent.com/70882611/228630670-cadce8b5-0fdb-46f5-8a9a-356595726d3d.png" width="200">
