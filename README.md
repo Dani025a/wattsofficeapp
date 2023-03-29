@@ -6,8 +6,8 @@ This project is created in Flutter using Firebase Authenticaion and Firebase Fir
 Not a finished project.
 
 Login and Signup screens
-![image](https://user-images.githubusercontent.com/70882611/228630880-7e376a74-c5af-4d23-b3b3-e7a6e4d4ad31.png = width=100)
-![image](https://user-images.githubusercontent.com/70882611/228631085-2e560bdb-d065-4df2-b6e1-0e93897de9dd.png = width=100)
+![image](https://user-images.githubusercontent.com/70882611/228630880-7e376a74-c5af-4d23-b3b3-e7a6e4d4ad31.png "Login" {width=40px height=400px})
+![image](https://user-images.githubusercontent.com/70882611/228631085-2e560bdb-d065-4df2-b6e1-0e93897de9dd.png "SignUp" {width=40px height=400px})
 
 
 
